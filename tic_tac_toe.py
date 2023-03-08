@@ -1,0 +1,125 @@
+def display_board(board):
+    for row in board: # for every row
+        print("+-------"*3, end="+\n") # header
+        print("|       "*3, end="|\n") # mid space
+        print("|   ",row[0],"   ",
+              "|   ",row[1],"   ",
+              "|   ",row[2],"   ",sep="", end="|\n") # print the values in the board
+        print("|       "*3, end="|\n") # mid space
+    print("+-------"*3, end="+\n") # tail
+        
+
+def make_list_of_free_fields(board):
+    positions = {1:(0,0),2:(0,1),3:(0,2),
+                 4:(1,0),5:(1,1),6:(1,2),
+                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
+    free_positions = []
+    for i in range(len(positions)): # For every element in dictionary positions
+        if board[positions[i+1][0]][positions[i+1][1]] not in ["X","O"]: #check if position is not equal to X or O
+            free_positions.append(positions[i+1]) # if not equal, add to list as free position
+    return(free_positions)
+
+def victory_for(board, sign):
+    winner = False
+    # This block checks rows and columns
+    for i in range(3): # sliding from 0 to 2 in rows
+        check_row = [] # create a row with the values in board
+        check_column = [] # create a column with the values in bard
+        for j in range(3): # sliding from 0 to 2 in columns
+            check_row.append(board[i][j]) # create check row
+            check_column.append(board[j][i]) # create check column
+        #print(check_column)
+        #print(check_row)
+        if check_row == [sign]*3 or check_column == [sign]*3: #check column or row are winners
+            winner = True
+            #display_board(board)
+            if sign == "X":
+                print("Machine won!")
+            else:
+                print("You won!")
+            return winner
+
+    # This block checks diagonals
+    reverse_i = [2,1,0] # This list is used to iterate i in reverse for the right diagonal
+    left_diag = []
+    right_diag = []
+    for i in range(3):
+        left_diag.append(board[i][i])
+        right_diag.append(board[i][reverse_i[i]])
+    if left_diag == [sign]*3 or right_diag == [sign]*3: #check if any diagonal is a winner
+            winner = True
+            if sign == "X":
+                print("Machine won!")
+            else:
+                print("You won!")
+            return winner
+
+    # This block checks if there is a draw:
+    if not winner: # if after checking all possible combinations for a winner
+        free_positions=make_list_of_free_fields(board) 
+        if free_positions == []: # there's no available positions
+            print("This is a draw!") # then it's a draw
+            winner = True
+            return winner
+
+    print("Game continues!")
+    return winner
+        
+def draw_move(board):
+    from random import randrange
+    free_positions = make_list_of_free_fields(board) # create a list with free positions
+    positions = {1:(0,0),2:(0,1),3:(0,2),
+                 4:(1,0),5:(1,1),6:(1,2),
+                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
+
+    move = positions[randrange(1,10)] #make a random move
+
+    while move not in free_positions: #if the random move is not available
+        move = positions[randrange(1,10)] #make another random move 
+
+    board[move[0]][move[1]] = "X"
+    print("The machine does...")
+    display_board(board)
+    return board
+
+def enter_move(board):
+    free_positions = make_list_of_free_fields(board) # create a list with free positions
+    positions = {1:(0,0),2:(0,1),3:(0,2),
+                 4:(1,0),5:(1,1),6:(1,2),
+                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
+    
+    position = int(input("Enter your move!:"))  #user enters a value
+    print("You have selected", position)
+
+    while position < 1 or position > 9: #if position is out of range
+        position = int(input("Your position has to be between 1-9 (check the board):"))
+
+    move = positions[position]
+
+    while move not in free_positions: #if the cell not available
+        position = int(input("Your position has to be empty (check the board):")) #force the user to chose another one
+        if position >= 1 and position <= 9:
+            move = positions[position]
+        else:
+            print("Remember that the values have to be between 1-9!")
+
+    board[move[0]][move[1]] = "O"
+    display_board(board)
+    return board
+
+def tic_tac_toe(board=[[1,2,3],[4,"X",6],[7,8,9]]):
+    print("Welcome to Tic Tac Toe against the most powerful AI in the world, the infamous randrange function...")
+    print("Prepare yourself! The machine has determined that the best way to win is being the first in moving and choosing the center..")
+    winner = False # There is no winner yet, the game just started!
+    display_board(board) # Print the board
+    while not winner: #until the loop finds a winner
+        board = enter_move(board) # let the user choose a move
+        winner = victory_for(board,"O") # check if user won
+        if winner: # if so
+            break # stop it
+        board = draw_move(board) # let the machine choose a move
+        winner = victory_for(board,"X") # check if there is a winner
+    print("Amazing game!")
+
+tic_tac_toe()
+
