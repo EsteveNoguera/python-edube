@@ -88,8 +88,14 @@ def enter_move(board):
                  4:(1,0),5:(1,1),6:(1,2),
                  7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
     
-    position = int(input("Enter your move!:"))  #user enters a value
-    print("You have selected", position)
+    try:
+        position = int(input("Enter your move!:"))  #user enters a value
+        print("You have selected", position)
+
+    except: # The code could be expanded to force the user to enter a number like the checks below
+        print("You probably entered something that cannot be used as a number. You got 1 more try only!")
+        position = int(input("Enter your move!:"))
+        print("You have selected", position)
 
     while position < 1 or position > 9: #if position is out of range
         position = int(input("Your position has to be between 1-9 (check the board):"))
@@ -121,5 +127,4 @@ def tic_tac_toe(board=[[1,2,3],[4,"X",6],[7,8,9]]):
         winner = victory_for(board,"X") # check if there is a winner
     print("Amazing game!")
 
-tic_tac_toe()
-
+tic_tac_toe() #sarts the game
