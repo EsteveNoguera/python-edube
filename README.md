@@ -1,7 +1,7 @@
 # Python projects
 Projects done during the courses offered by the Python Institute
 
-## 1. Final project for PCEP Certified Entry-Level Python Programme
+## 1. [Final project for PCEP Certified Entry-Level Python Programme](https://github.com/EsteveNoguera/python-edube/blob/main/tic_tac_toe.py)
 
 The course proposes to do a tic-tac-toe. You can check my approach for this [here](https://github.com/EsteveNoguera/python-edube/blob/main/tic_tac_toe.py). Although it works as intended, things that may possibly need an improvement are: 
 
