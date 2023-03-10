@@ -6,7 +6,9 @@ a winner with the function victory_for() (either X for machine or O for user), t
 by the machine or the user respectively in order to make a move. The function tic_tac_toe() starts the game and
 checks if the variable winner returned by the function victory_for() is true and stops the game if so. 
 """
-
+positions = {1:(0,0),2:(0,1),3:(0,2),
+             4:(1,0),5:(1,1),6:(1,2),
+             7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions that can be chosen in the board
 
 def display_board(board):
     for row in board: # for every row
@@ -20,9 +22,6 @@ def display_board(board):
         
 
 def make_list_of_free_fields(board):
-    positions = {1:(0,0),2:(0,1),3:(0,2),
-                 4:(1,0),5:(1,1),6:(1,2),
-                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
     free_positions = []
     for i in range(len(positions)): # For every element in dictionary positions
         if board[positions[i+1][0]][positions[i+1][1]] not in ["X","O"]: #check if position is not equal to X or O
@@ -78,10 +77,7 @@ def victory_for(board, sign):
 def draw_move(board):
     from random import randrange
     free_positions = make_list_of_free_fields(board) # create a list with free positions
-    positions = {1:(0,0),2:(0,1),3:(0,2),
-                 4:(1,0),5:(1,1),6:(1,2),
-                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
-
+   
     move = positions[randrange(1,10)] #make a random move
 
     while move not in free_positions: #if the random move is not available
@@ -94,9 +90,6 @@ def draw_move(board):
 
 def enter_move(board):
     free_positions = make_list_of_free_fields(board) # create a list with free positions
-    positions = {1:(0,0),2:(0,1),3:(0,2),
-                 4:(1,0),5:(1,1),6:(1,2),
-                 7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions
     
     try:
         position = int(input("Enter your move!:"))  #user enters a value
