@@ -8,6 +8,6 @@ The course proposes to do a tic-tac-toe. You can check my approach for this [her
 1. Add a dynamic way to get all possible positions instead of hard coding them into a variable. This could help to extend the code into bigger boards
 2. Allow the machine to start randomly instead of always center, or even let the user start. 
 3. Make a 2 player version
-4. And probably much more..
+4. And probably much more...
 
 
