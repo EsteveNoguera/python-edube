@@ -6,11 +6,15 @@ a winner with the function victory_for() (either X for machine or O for user), t
 by the machine or the user respectively in order to make a move. The function tic_tac_toe() starts the game and
 checks if the variable winner returned by the function victory_for() is true and stops the game if so. 
 """
+
+# This variable is used for different functions in order to check positions or draw a position
+# It's a dictionary of all possible positions that can be chosen in the board
 positions = {1:(0,0),2:(0,1),3:(0,2),
              4:(1,0),5:(1,1),6:(1,2),
-             7:(2,0),8:(2,1),9:(2,2)} # dictionary of all possible positions that can be chosen in the board
+             7:(2,0),8:(2,1),9:(2,2)} 
 
 def display_board(board):
+    
     for row in board: # for every row
         print("+-------"*3, end="+\n") # header
         print("|       "*3, end="|\n") # mid space
@@ -22,6 +26,7 @@ def display_board(board):
         
 
 def make_list_of_free_fields(board):
+    
     free_positions = []
     for i in range(len(positions)): # For every element in dictionary positions
         if board[positions[i+1][0]][positions[i+1][1]] not in ["X","O"]: #check if position is not equal to X or O
@@ -29,16 +34,19 @@ def make_list_of_free_fields(board):
     return(free_positions)
 
 def victory_for(board, sign):
-    winner = False
-    # This block checks rows and columns
+
+   # This block checks if there's a winner
+    reverse_i = [2,1,0] # This list is used to iterate i in reverse for the right diagonal
+    left_diag = [] # List that saves left diagonal
+    right_diag = [] # List that saves right diagonal
     for i in range(3): # sliding from 0 to 2 in rows
         check_row = [] # create a row with the values in board
-        check_column = [] # create a column with the values in bard
+        check_column = [] # create a column with the values in board
+        left_diag.append(board[i][i]) # create the left diagonal
+        right_diag.append(board[i][reverse_i[i]]) # create the right diagonal
         for j in range(3): # sliding from 0 to 2 in columns
             check_row.append(board[i][j]) # create check row
             check_column.append(board[j][i]) # create check column
-        #print(check_column)
-        #print(check_row)
         if check_row == [sign]*3 or check_column == [sign]*3: #check column or row are winners
             winner = True
             #display_board(board)
@@ -47,31 +55,24 @@ def victory_for(board, sign):
             else:
                 print("You won!")
             return winner
-
-    # This block checks diagonals
-    reverse_i = [2,1,0] # This list is used to iterate i in reverse for the right diagonal
-    left_diag = []
-    right_diag = []
-    for i in range(3):
-        left_diag.append(board[i][i])
-        right_diag.append(board[i][reverse_i[i]])
     if left_diag == [sign]*3 or right_diag == [sign]*3: #check if any diagonal is a winner
-            winner = True
-            if sign == "X":
-                print("Machine won!")
-            else:
-                print("You won!")
-            return winner
-
-    # This block checks if there is a draw:
-    if not winner: # if after checking all possible combinations for a winner
-        free_positions=make_list_of_free_fields(board) 
-        if free_positions == []: # there's no available positions
-            print("This is a draw!") # then it's a draw
-            winner = True
-            return winner
-
+        winner = True
+        if sign == "X":
+            print("Machine won!")
+        else:
+            print("You won!")
+        return winner
+    
+    # This blocks checks if there's a draw. Function stops before if there's a winner. 
+    free_positions=make_list_of_free_fields(board) 
+    if free_positions == []: # there's no available positions
+        print("This is a draw!") # then it's a draw
+        winner = True
+        return winner
+    
+    # If all other paths fail, this runs 
     print("Game continues!")
+    winner = False
     return winner
         
 def draw_move(board):
