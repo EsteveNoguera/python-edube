@@ -6,6 +6,7 @@ a winner with the function victory_for() (either X for machine or O for user), t
 by the machine or the user respectively in order to make a move. The function tic_tac_toe() starts the game and
 checks if the variable winner returned by the function victory_for() is true and stops the game if so. 
 """
+from random import randrange
 
 # This variable is used for different functions in order to check positions or draw a position
 # It's a dictionary of all possible positions that can be chosen in the board
@@ -24,7 +25,6 @@ def display_board(board):
         print("|       "*3, end="|\n") # mid space
     print("+-------"*3, end="+\n") # tail
         
-
 def make_list_of_free_fields(board):
     
     free_positions = []
@@ -61,7 +61,7 @@ def victory_for(board, sign):
             print("Machine won!")
         else:
             print("You won!")
-        return winner
+        return winner # Note: I have the feeling there must be a way to merge this if statement with the previous. 
     
     # This blocks checks if there's a draw. Function stops before if there's a winner. 
     free_positions=make_list_of_free_fields(board) 
@@ -76,48 +76,46 @@ def victory_for(board, sign):
     return winner
         
 def draw_move(board):
-    from random import randrange
+    
     free_positions = make_list_of_free_fields(board) # create a list with free positions
-   
     move = positions[randrange(1,10)] #make a random move
-
     while move not in free_positions: #if the random move is not available
         move = positions[randrange(1,10)] #make another random move 
-
     board[move[0]][move[1]] = "X"
     print("The machine does...")
     display_board(board)
     return board
 
 def enter_move(board):
-    free_positions = make_list_of_free_fields(board) # create a list with free positions
-    
+   
+    # The code below try to force user to select a proper integer value. May need some improvement. 
     try:
         position = int(input("Enter your move!:"))  #user enters a value
         print("You have selected", position)
-
     except: # The code could be expanded to force the user to enter a number like the checks below
         print("You probably entered something that cannot be used as a number. You got 1 more try only!")
         position = int(input("Enter your move!:"))
         print("You have selected", position)
-
     while position < 1 or position > 9: #if position is out of range
         position = int(input("Your position has to be between 1-9 (check the board):"))
-
     move = positions[position]
-
+    
+    # The code below checks if the value entered is available in the board
+    free_positions = make_list_of_free_fields(board) # create a list with free positions
     while move not in free_positions: #if the cell not available
         position = int(input("Your position has to be empty (check the board):")) #force the user to chose another one
         if position >= 1 and position <= 9:
             move = positions[position]
         else:
             print("Remember that the values have to be between 1-9!")
-
+    
+    # Modify the board and display it
     board[move[0]][move[1]] = "O"
     display_board(board)
     return board
 
 def tic_tac_toe(board=[[1,2,3],[4,"X",6],[7,8,9]]):
+    
     print("Welcome to Tic Tac Toe against the most powerful AI in the world, the infamous randrange function...")
     print("Prepare yourself! The machine has determined that the best way to win is being the first in moving and choosing the center..")
     winner = False # There is no winner yet, the game just started!
