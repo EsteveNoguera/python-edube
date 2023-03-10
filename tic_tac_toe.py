@@ -1,3 +1,13 @@
+"""                         This is a tic tac toe game to be played in a terminal
+The main idea is that there is an object called board that saves the current state of the board in a array 3x3
+This array then is used to display the status of the game with the function displa_board() or check if there's 
+a winner with the function victory_for() (either X for machine or O for user), that returns a boolean variable 
+(winner) if a winner or a draw is found. Finally draw_move() and enter_move() allow to modifiy the board either
+by the machine or the user respectively in order to make a move. The function tic_tac_toe() starts the game and
+checks if the variable winner returned by the function victory_for() is true and stops the game if so. 
+"""
+
+
 def display_board(board):
     for row in board: # for every row
         print("+-------"*3, end="+\n") # header
