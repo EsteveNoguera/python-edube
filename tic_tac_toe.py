@@ -49,7 +49,6 @@ def victory_for(board, sign):
             check_column.append(board[j][i]) # create check column
         if check_row == [sign]*3 or check_column == [sign]*3: #check column or row are winners
             winner = True
-            #display_board(board)
             if sign == "X":
                 print("Machine won!")
             else:
