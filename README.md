@@ -10,4 +10,12 @@ The course proposes to do a tic-tac-toe. You can check my approach for this [her
 3. Make a 2 player version
 4. And probably much more...
 
+### 1.1. How to run it?
 
+#### Linux
+Download tic_tac_toe.py script. Open a terminal and go where the script is saved and run the following command:
+>python tic_tac_toe.py
+You can always use any IDE of your choice (PyCharm, Spyder...).
+
+#### Windows
+Download tic_tac_toe.py script and use any Python IDE of your choice (PyCharm, Spyder...).
