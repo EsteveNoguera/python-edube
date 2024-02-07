@@ -15,6 +15,7 @@ The course proposes to do a tic-tac-toe. You can check my approach for this [her
 #### Linux
 Download tic_tac_toe.py script. Open a terminal and go where the script is saved and run the following command:
 >python tic_tac_toe.py
+
 You can always use any IDE of your choice (PyCharm, Spyder...).
 
 #### Windows
